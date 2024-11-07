@@ -1,0 +1,13 @@
+#!/bin/sh
+
+. dylib.sh
+
+jni="`include`"
+universal libUnsafeExtension.dylib UnsafeExtension.c -I"$jni" -I"$jni/darwin" -Ofast -Wno-unused-parameter
+javac UnsafeExtension.java
+zip UnsafeExtension.zip \
+	UnsafeExtension.class libUnsafeExtension.dylib \
+	UnsafeExtension.java UnsafeExtension.c \
+	Addr.java Bench.java \
+	UnusedJava.java UnusedC.java UnusedOS.java \
+	Paging.java
