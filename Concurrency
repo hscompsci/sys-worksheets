@@ -1,0 +1,7 @@
+#!/bin/sh
+
+exec zip Concurrency.zip \
+	Preemption.java \
+	Pi.java PiConcurrent.java \
+	Concurrency.java ConcurrencyFixed.java \
+	ConcurrencyPrimitive.java
