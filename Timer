@@ -1,0 +1,10 @@
+#!/bin/sh
+
+. dylib.sh
+universal libTimer.dylib Timer.c -Wno-unused-parameter
+javac Timer.java
+zip Timer.zip \
+	Timer.class libTimer.dylib \
+	Timer.java Timer.c \
+	SpecialKeys.java BusyLoop.java \
+	PollingClock.java SignalClock.java
