@@ -1,11 +1,6 @@
 #!/bin/sh
 
-c99() {
-	cc -std=c99 -Og -Wall -Wextra -Wpedantic "$@"
-}
-
-c99 -shared -target arm64-apple-darwin -o libStackPointer-arm64.dylib StackPointer.c
-c99 -shared -target x86_64-apple-darwin -o libStackPointer-x86_64.dylib StackPointer.c
-lipo libStackPointer-arm64.dylib libStackPointer-x86_64.dylib -create -output libStackPointer.dylib
+. dylib.sh
+universal libStackPointer.dylib StackPointer.c
 javac StackPointer.java
 zip StackPointer.zip StackPointer.class libStackPointer.dylib StackPointer.java StackPointer.c
