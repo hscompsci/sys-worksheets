@@ -71,9 +71,9 @@ close to the data path, it is much faster to access.
       bytes called a cache line. For which type of locality does this improve access time?
 
 
-   8. Let’s find out how large your processor’s cache lines are! Have one group member
-      download CacheEffects.java. While that is happening, someone else should create
-      a spreadsheet and populate the first column with the numbers 1, 2, 4, 8, 16, and 32.
+   8. Let’s measure your CPU’s cache lines, whose size will be a power of 2. Have one group
+      member download CacheEffects.java. Simultaneously, someone else should create
+      a spreadsheet and populate its first column with the numbers 1, 2, 4, 8, 16, and 32.
 
           a. Run the program several times, providing each of the above values. Record the
              resulting time measurements.
