@@ -1,0 +1,15 @@
+#!/bin/sh
+
+. dylib.sh
+universal libTraceAllocations.dylib TraceAllocations.c -Wno-string-plus-int -Wno-unused-parameter
+javac TraceAllocations.java
+
+c99 -target arm64-apple-darwin -o java-arm64 java.c
+c99 -target x86_64-apple-darwin -o java-x86_64 java.c
+lipo java-arm64 java-x86_64 -create -output java
+
+zip TraceAllocations.zip \
+	TraceAllocations.class libTraceAllocations.dylib \
+	TraceAllocations.java TraceAllocations.c \
+	java \
+	Alloc.java
