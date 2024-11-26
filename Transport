@@ -1,0 +1,7 @@
+#!/bin/sh
+
+zip Transport.zip \
+	UdpServer.java UdpClient.java \
+	FlowControlServer.java FlowControlClient.java \
+	TcpServer.java TcpClient.java \
+	http_header.txt

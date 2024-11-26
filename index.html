@@ -1,0 +1,112 @@
+#!/bin/sh
+
+readonly FLOW_CONTROL_COMMAND="java FlowControlServer.java"
+readonly NETCAT_EXTRA_SWITCHES="" # "p" if running netcat-traditional
+readonly PORT_RANGE_START="1024"
+readonly SIZE_LIMIT_KB="10240"
+readonly TIMEOUT="120"
+readonly TMP_FOLDER="/tmp/transport"
+
+echo
+exec 2>&1
+
+case "$REQUEST_URI"
+in
+*.txt*)
+	exec cat "$TMP_FOLDER/`printf %s "$REQUEST_URI" | rev | cut -d"/" -f1 | cut -d"?" -f1 | rev`"
+	;;
+esac
+
+cat <<-tac
+	<html>
+		<head>
+			<title>Transport-layer server</title>
+		</head>
+		<body>
+tac
+
+case "$REQUEST_URI"
+in
+*\?*)
+	command=""
+	switch=""
+	for pair in `printf %s "$REQUEST_URI" | cut -d"?" -f2 | tr "&" "\n"`
+	do
+		key="`printf %s "$pair" | cut -d= -f1`"
+		value="`printf %s "$pair" | cut -d= -f2`"
+		case "$key"
+		in
+		protocol)
+			case "$value"
+			in
+			flow)
+				command="$FLOW_CONTROL_COMMAND"
+				protocol="udp"
+				;;
+			udp)
+				protocol="udp"
+				switch="u"
+				;;
+			tcp)
+				protocol="tcp"
+				switch="k"
+				;;
+			esac
+			;;
+		esac
+	done
+
+	if [ ! -h "$protocol.txt" ]
+	then
+		echo "<b>ERROR: Script is not symlinked as <code>$protocol.txt</code>!</b>"
+		exit 1
+	fi
+
+	port="$PORT_RANGE_START"
+	while fuser "$port/$protocol" >/dev/null 2>&1
+	do
+		port="$((port + 1))"
+	done
+	mkdir -p /tmp/transport
+
+	filename="`mktemp -p $TMP_FOLDER`"
+	basename="`basename "$filename"`"
+
+	cat <<-tac
+		<p>Running server on <code>$HTTP_HOST</code> $protocol port $port for $TIMEOUT seconds...</p>
+		<p>After sending data, download it at <a href="$protocol.txt?$basename" download>$protocol.txt</a>.</p>
+	tac
+
+	limit="$((SIZE_LIMIT_KB * 2))"
+	if [ -n "$command" ]
+	then
+		( ulimit -f "$limit"; timeout "$TIMEOUT" $command "$port" >"$filename"; rm "$filename" ) >/dev/null 2>&1 &
+	else
+		switches="l$NETCAT_EXTRA_SWITCHES"
+		if [ -n "$switch" ]
+		then
+			switches="$switch$switches"
+		fi
+
+		( ulimit -f "$limit"; timeout "$TIMEOUT" nc "-$switches" "$port" >"$filename"; rm "$filename" ) >/dev/null 2>&1 &
+	fi
+	;;
+*)
+	cat <<-tac
+		<form>
+			<input type="radio" name="protocol" value="flow" checked>UDP with flow control</input>
+			<br>
+			<input type="radio" name="protocol" value="udp">UDP</input>
+			<br>
+			<input type="radio" name="protocol" value="tcp">TCP</input>
+			<br>
+			<button>Start server</button>
+		</form>
+	tac
+	;;
+esac
+
+cat <<-tac
+		</body>
+	</html>
+tac
