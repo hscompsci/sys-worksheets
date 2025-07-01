@@ -15,6 +15,7 @@ void *Java_UnsafeExtension_allocateInitializedMemory(JNIEnv *jvm, jobject this, 
 	}
 
 	if(mlock(address, bytes)) {
+		perror("mlock()");
 		address = NULL;
 	}
 
