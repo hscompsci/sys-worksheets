@@ -26,8 +26,8 @@ like we just did as a class. Modify your mergeSort() method implementation to .s
 Callable<>s to the global thread pool instead of directly recursing, then .get() their results
 just before performing the merge step.
 
-   3. Once you have resolved the compiler warnings, run the program. What happens?
-      Looking at the warning messages, what do you think is going wrong?
+   3. Once you have resolved the compiler errors, run the program. What happens? Looking
+      at the warning messages, what do you think is going wrong?
 
 
 
