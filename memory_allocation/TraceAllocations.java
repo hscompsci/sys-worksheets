@@ -11,15 +11,20 @@ public class TraceAllocations {
 	static {
 		final String NATIVE_LIBRARY = "TraceAllocations";
 
-		String preloads = System.getenv("DYLD_INSERT_LIBRARIES");
-		if(preloads == null || !preloads.contains(NATIVE_LIBRARY)) {
-			String command = ProcessHandle.current().info().commandLine().get();
-			command = command.substring(command.indexOf("java"));
-			System.err.println(
-				"WARNING: For tracing to work, rerun me with the command: " + 
-				"DYLD_INSERT_LIBRARIES=lib" + NATIVE_LIBRARY + ".dylib ./" + command
-			);
+		if(
+			!isPreloaded("DYLD_INSERT_LIBRARIES", NATIVE_LIBRARY)
+			&&
+			!isPreloaded("LD_PRELOAD", NATIVE_LIBRARY)
+		) {
+			System.err.println("WARNING: For tracing to work, rerun me with one of the commands:");
+			System.err.println("  macOS: DYLD_INSERT_LIBRARIES=lib" + NATIVE_LIBRARY + ".dylib ./java");
+			System.err.println("  GNU/Linux: LD_PRELOAD=./lib" + NATIVE_LIBRARY + ".dylib java");
 		}
 		System.loadLibrary(NATIVE_LIBRARY);
+	}
+
+	private static boolean isPreloaded(String environment, String library) {
+		String preloads = System.getenv(environment);
+		return preloads != null && preloads.contains(library);
 	}
 }
