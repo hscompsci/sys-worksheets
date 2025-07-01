@@ -11,7 +11,7 @@ xattr -d com.apple.quarantine libUnsafeExtension.dylib
 Memory addresses
 The first two lines of the Addr.java program find and display the memory address of a string
 literal. Run it using the following command:
-java --add-exports java.base/jdk.internal.misc=ALL-UNNAMED Addr.java
+java --add-exports java.base/jdk.internal.misc=ALL-UNNAMED Addr
 
 Let it sit at the Hit enter to continue... prompt. (Do not enter anything.)
 

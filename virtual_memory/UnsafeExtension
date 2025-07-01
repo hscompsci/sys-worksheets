@@ -5,9 +5,12 @@
 jni="`include`"
 universal libUnsafeExtension.dylib UnsafeExtension.c -I"$jni" -I"$jni/darwin" -Ofast -Wno-unused-parameter
 javac UnsafeExtension.java
+javac --add-exports java.base/jdk.internal.misc=ALL-UNNAMED Addr.java
 zip UnsafeExtension.zip \
 	UnsafeExtension.class libUnsafeExtension.dylib \
 	UnsafeExtension.java UnsafeExtension.c \
-	Addr.java Bench.java \
+	Addr.class \
+	Addr.java \
+	Bench.java \
 	UnusedJava.java UnusedC.java UnusedOS.java \
 	Paging.java
