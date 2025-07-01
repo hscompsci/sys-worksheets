@@ -23,8 +23,8 @@ the following questions.
 
 
    3. Open a second terminal and check your CPU clock speed by running the command:
-      sysctl -a | grep -F hw.tb
-      The result is in 100s of Hz. Divide by 10 million to convert to GHz and record the result.
+      ./clockspeed
+      The result is in gigahertz (GHz).
 
 
    4. A CPU clocked at 1 GHz can execute one billion machine language instructions per
@@ -38,7 +38,7 @@ the following questions.
 
 
 
-   6. Check your CPU’s number of cores by running: sysctl -a | grep -F cpu.cores
+   6. Check your CPU's number of cores by running: ./corecount
 
 
 

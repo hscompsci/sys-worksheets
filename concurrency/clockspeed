@@ -1,0 +1,14 @@
+#!/bin/sh
+
+case "`uname`" in
+Darwin)
+    cmd="sysctl -a | grep -F hw.tb | cut -wf2 | sed s.$./10000000. | bc -l"
+    ;;
+Linux)
+    cmd="lscpu | grep -F Model\ name"
+    ;;
+esac
+
+echo "Running command: $cmd"
+echo
+eval exec $cmd
