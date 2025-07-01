@@ -6,7 +6,9 @@
 
 #else
 
+#include <sys/syscall.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 #pragma redefine_extname calloc_ calloc
 #pragma redefine_extname free_ free
@@ -20,13 +22,17 @@ void *malloc_(size_t);
 void *mmap_(void *, size_t, int, int, int, off_t);
 int munmap_(void *, size_t);
 
-#pragma GCC warning "Link with -Wl,--wrap=calloc,--wrap=free,--wrap=malloc,--wrap=mmap,--wrap=munmap"
+#define calloc __libc_calloc
+#define free __libc_free
+#define malloc __libc_malloc
 
-#define calloc __real_calloc
-#define free __real_free
-#define malloc __real_malloc
-#define mmap __real_mmap
-#define munmap __real_munmap
+static inline void *mmap(void *addr, size_t len, int prot, int flags, int fd, off_t offset) {
+	return (void *) syscall(SYS_mmap, addr, len, prot, flags, fd, offset);
+}
+
+static inline int munmap(void *addr, size_t len) {
+	return syscall(SYS_munmap, addr, len);
+}
 
 #define DYLD_INTERPOSE(no, op)
 #define WRAPPER
