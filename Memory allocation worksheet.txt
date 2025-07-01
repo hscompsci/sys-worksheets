@@ -17,8 +17,8 @@ being used for any other purpose until the program explicitly frees, or dealloca
 The Alloc.java program prompts for a number of kilobytes of memory to allocate. It then
 allocates that many one-kilobyte arrays. It uses the TraceAllocations library to intercept
 and display the allocations and frees performed by the JVM. Run it using the command
-DYLD_INSERT_LIBRARIES=libTraceAllocations.dylib ./java Alloc.java
-(note the ./ before java).
+./trace Alloc.java
+(note the ./ before trace).
 
    1. Try requesting 10000 kilobytes, or approximately 10 megabytes. Looking at the total
       amount of space that gets allocated, what must the JVM be doing with the allocations

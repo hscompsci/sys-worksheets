@@ -11,5 +11,5 @@ lipo java-arm64 java-x86_64 -create -output java
 zip TraceAllocations.zip \
 	TraceAllocations.class libTraceAllocations.dylib \
 	TraceAllocations.java TraceAllocations.c \
-	java \
+	trace java \
 	Alloc.java

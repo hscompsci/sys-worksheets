@@ -1,0 +1,14 @@
+#!/bin/sh
+
+case "`uname`" in
+Darwin)
+    cmd="DYLD_INSERT_LIBRARIES=libTraceAllocations.dylib ./java"
+    ;;
+Linux)
+    cmd="LD_PRELOAD=./libTraceAllocations.so java -Djava.library.path=."
+    ;;
+esac
+
+echo "Running command: $cmd"
+echo
+eval $cmd "$@"
