@@ -1,5 +1,6 @@
 #include <sys/time.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <string.h>
 
 bool Java_Timer_set(uintptr_t jvm, uintptr_t this, long milliseconds, bool repeating, int identifier) {
