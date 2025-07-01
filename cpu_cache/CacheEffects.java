@@ -13,7 +13,7 @@ class CacheEffects {
 			for(int position = 0; position != big.length; ++position) {
 				// Jump forward by the requested number of indices, wrapping to avoid bounds errors.
 				// Thus, we perform the same number of accesses regardless of the skip amount.
-				int index = (position * skip) % big.length;
+				int index = (int) (((long) position * skip) % big.length);
 
 				// Access the desired element.
 				int indexAtIndex = (int) big[index];
