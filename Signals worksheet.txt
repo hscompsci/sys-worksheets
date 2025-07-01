@@ -127,7 +127,7 @@ asynchronous event occurs. Hence, they can be used to rewrite code to eliminate 
 
 
 
-   14. Remove the loop but change the System.out.println() to a
+   14. Remove the loop in main() and change the System.out.print() to a
        System.console().readLine(), so that the program does not exit immediately.
        How does the CPU time limit affect the program, and what does this tell you?
 
