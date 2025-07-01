@@ -2,8 +2,17 @@
 
 . ../dylib.sh
 
-jni="`include`"
-universal libUnsafeExtension.dylib UnsafeExtension.c -I"$jni" -I"$jni/darwin" -Ofast -Wno-unused-parameter
+case "`uname`" in
+Darwin)
+	jni="`include`"
+	universal libUnsafeExtension.dylib UnsafeExtension.c -I"$jni" -I"$jni/darwin" -Ofast -Wno-unused-parameter
+	;;
+Linux)
+	jni="/usr/include"
+	c99 -shared -fpic -I"$jni" -I"$jni/linux" -o libUnsafeExtension.so UnsafeExtension.c -Ofast -Wno-unused-parameter
+	;;
+esac
+
 javac UnsafeExtension.java
 javac --add-exports java.base/jdk.internal.misc=ALL-UNNAMED Addr.java
 zip UnsafeExtension.zip \
