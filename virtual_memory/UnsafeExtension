@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. dylib.sh
+. ../dylib.sh
 
 jni="`include`"
 universal libUnsafeExtension.dylib UnsafeExtension.c -I"$jni" -I"$jni/darwin" -Ofast -Wno-unused-parameter

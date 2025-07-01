@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. dylib.sh
+. ../dylib.sh
 universal libTimer.dylib Timer.c -Wno-unused-parameter
 javac Timer.java
 zip Timer.zip \

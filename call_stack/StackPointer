@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. dylib.sh
+. ../dylib.sh
 universal libStackPointer.dylib StackPointer.c
 javac StackPointer.java
 zip StackPointer.zip StackPointer.class libStackPointer.dylib StackPointer.java StackPointer.c

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. dylib.sh
+. ../dylib.sh
 universal libTraceAllocations.dylib TraceAllocations.c -Wno-string-plus-int -Wno-unused-parameter
 javac TraceAllocations.java
 
