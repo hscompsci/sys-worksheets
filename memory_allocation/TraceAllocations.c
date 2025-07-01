@@ -1,4 +1,38 @@
+#ifdef __APPLE__
+
 #include "dyld-interposing.h"
+
+#define WRAPPER static
+
+#else
+
+#include <sys/types.h>
+
+#pragma redefine_extname calloc_ calloc
+#pragma redefine_extname free_ free
+#pragma redefine_extname malloc_ malloc
+#pragma redefine_extname mmap_ mmap
+#pragma redefine_extname munmap_ munmap
+
+void *calloc_(size_t, size_t);
+void free_(void *);
+void *malloc_(size_t);
+void *mmap_(void *, size_t, int, int, int, off_t);
+int munmap_(void *, size_t);
+
+#pragma GCC warning "Link with -Wl,--wrap=calloc,--wrap=free,--wrap=malloc,--wrap=mmap,--wrap=munmap"
+
+#define calloc __real_calloc
+#define free __real_free
+#define malloc __real_malloc
+#define mmap __real_mmap
+#define munmap __real_munmap
+
+#define DYLD_INTERPOSE(no, op)
+#define WRAPPER
+
+#endif
+
 #include "unstdio.h"
 
 #include <sys/mman.h>
@@ -25,7 +59,7 @@ void Java_TraceAllocations_stop(void) {
 	report(NULL, 0);
 }
 
-static void *malloc_(size_t size) {
+WRAPPER void *malloc_(size_t size) {
 	void *result = malloc(size);
 	if(size >= smallest) {
 		report("allocated", size);
@@ -35,7 +69,7 @@ static void *malloc_(size_t size) {
 }
 DYLD_INTERPOSE(malloc_, malloc)
 
-static void *calloc_(size_t count, size_t size) {
+WRAPPER void *calloc_(size_t count, size_t size) {
 	void *result = calloc(count, size);
 	if(count * size >= smallest) {
 		report("allocated", count * size);
@@ -45,7 +79,7 @@ static void *calloc_(size_t count, size_t size) {
 }
 DYLD_INTERPOSE(calloc_, calloc)
 
-static void free_(void *ptr) {
+WRAPPER void free_(void *ptr) {
 	size_t size = list(ptr, REMOVE);
 	if(ptr != NULL && size >= smallest) {
 		report("freed", -size);
@@ -54,7 +88,7 @@ static void free_(void *ptr) {
 }
 DYLD_INTERPOSE(free_, free)
 
-static void *mmap_(void *addr, size_t len, int prot, int flags, int fd, off_t offset) {
+WRAPPER void *mmap_(void *addr, size_t len, int prot, int flags, int fd, off_t offset) {
 	void *result = mmap(addr, len, prot, flags, fd, offset);
 	if(len >= smallest) {
 		report("allocated", len);
@@ -63,7 +97,7 @@ static void *mmap_(void *addr, size_t len, int prot, int flags, int fd, off_t of
 }
 DYLD_INTERPOSE(mmap_, mmap)
 
-static int munmap_(void *addr, size_t len) {
+WRAPPER int munmap_(void *addr, size_t len) {
 	if(len >= smallest) {
 		report("freed", -len);
 	}
