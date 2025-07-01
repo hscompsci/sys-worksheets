@@ -83,8 +83,8 @@ fake DNS server to resolve queries for any domain name to the address of the log
 Visit detectportal.firefox.com/success.txt in your Web browser. This page is
 intentionally simple because the Mozilla Firefox browser uses it to detect captive portals.
 
-   9. In a new terminal, run the command nslookup detectportal.firefox.com and
-      look at the last line of output. What is the address associated with this domain name?
+   9. Run the terminal command nslookup -query=a detectportal.firefox.com
+      and look at the last line of output. What address is associated with this domain name?
 
 
 
