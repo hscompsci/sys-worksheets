@@ -1,0 +1,7 @@
+/java
+/java-arm64
+/java-x86_64
+
+*.class
+*.dylib
+*.zip
