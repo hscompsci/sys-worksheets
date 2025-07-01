@@ -1,0 +1,14 @@
+#!/bin/sh
+
+case "`uname`" in
+Darwin)
+    cmd="sysctl -a | grep -F hw.cache"
+    ;;
+Linux)
+    cmd="getconf -a | grep -F LEVEL1_DCACHE_LINESIZE"
+    ;;
+esac
+
+echo "Running command: $cmd"
+echo
+eval exec $cmd

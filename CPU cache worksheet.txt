@@ -58,8 +58,8 @@ The program property you just observed is known as spatial locality.
 
 
 Cache
-Modern processors contain a small on-chip memory called a cache. Because it is physically
-close to the data path, it is much faster to access.
+Modern processors contain a small on-chip memory called a cache. Thanks to its smaller size
+and proximity, it is much faster to access.
 
    6. Whenever the program accesses a memory location, the processor checks for a copy in
       cache. If there is one, it reads or writes only the cached copy. Otherwise, it copies the
@@ -71,15 +71,16 @@ close to the data path, it is much faster to access.
       bytes called a cache line. For which type of locality does this improve access time?
 
 
-   8. Let’s measure your CPU’s cache lines, whose size will be a power of 2. Have one group
-      member download CacheEffects.java. Simultaneously, someone else should create
-      a spreadsheet and populate its first column with the numbers 1, 2, 4, 8, 16, and 32.
+   8. Let's measure your CPU's cache lines, whose size will be a power of 2. Have one
+      person download and extract CacheEffects.zip. Simultaneously, someone else
+      should create a spreadsheet and populate its first column with the values 1, 2, 4, 8, 16,
+      and 32.
 
-          a. Run the program several times, providing each of the above values. Record the
-             resulting time measurements.
+          a. Run the command java CacheEffects.java several times, providing each
+             of the above values. Record the resulting time measurements.
           b. Generate a scatterplot or line graph. How many longs fit in a cache line?
           c. Look up the size of a Java long. How many bytes is each cache line?
-          d. Check your answer with the command: sysctl -a | grep -F hw.cache
+          d. Check your answer with the command: ./linesize
 
 
 If you have extra time…

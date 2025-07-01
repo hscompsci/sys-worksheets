@@ -1,0 +1,5 @@
+#!/bin/sh
+
+exec zip CacheEffects.zip \
+    CacheEffects.java \
+    linesize
