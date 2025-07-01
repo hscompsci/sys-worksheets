@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ "$#" -ne "1" ]
+then
+	cat <<-tac
+		USAGE: $0 <PDF filename>
+
+		Updates the plaintext version of a document, ignoring most whitespace changes.
+	tac
+	exit 1
+fi
+
+pdf="$1"
+txt="`basename -s.pdf "$pdf"`.txt"
+pdftotext -layout "$pdf" - | diff -w "$txt" - | patch "$txt"
