@@ -3,6 +3,7 @@
 
 #include <sys/mman.h>
 #include <limits.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 static const size_t REMOVE = 0;
