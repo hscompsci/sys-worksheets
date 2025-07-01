@@ -81,7 +81,7 @@ created fewer reference types.
 
 
 
-If you have extra time
+If you have extra time…
 Test your prediction. Add another readLine() at the end of the program to prevent it from
 immediately exiting. Open the macOS Activity Monitor application and watch its App Memory
 number as you use the updated program.
