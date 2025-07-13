@@ -118,7 +118,7 @@ the program actually accesses the memory it has requested!
 
 
 Paging
-Virtual memory also gives the operating systems options when the system is low on RAM. Start
+Virtual memory also gives the operating system options when the system is low on RAM. Start
 the Paging.java benchmark using the command:
 java --add-exports java.base/jdk.internal.misc=ALL-UNNAMED
 Paging.java
