@@ -22,7 +22,7 @@ the following questions.
 
 
 
-   3. Open a second terminal and check your CPU clock speed by running the command:
+   3. In the new terminal, check your CPU clock speed by running the command:
       ./clockspeed
       The result is in gigahertz (GHz).
 
