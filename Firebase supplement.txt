@@ -1,0 +1,52 @@
+IB Computer Science 2
+Firebase Studio supplement
+
+These worksheets assume local execution on macOS. If you are using the Google Firebase
+Studio GNU/Linux cloud environment, make the following adjustments.
+
+Application-layer protocols
+
+Worksheet step (2)
+
+    1. Linux does not allow binding to low port numbers. Instead of binding to the standard
+         HTTP port, bind to one of the alternate HTTP ports with the command: nc -l 8080
+
+    2. Firebase will immediately make a request to the Web server, causing it to print several
+         lines of text. Restart it by pressing Ctrl+C then rerunning the same command; this time
+         no additional lines should print.
+
+    3. Instead of going to localhost/file, copy the URL by opening the Firebase Studio
+         panel on the left, expanding Backend Ports, and clicking the Copy to clipboard button
+         next to port 8080.
+
+    4. Open a new browser tab, paste the URL, add a /file to the end, and hit enter. After
+         noting down what happens, leave the tab open but switch back to the Firebase Studio.
+
+Worksheet step (4)
+
+Visiting the page caused a request for: http://127.0.0.1:8080/file
+Use this information to answer the question.
+
+Concurrency
+
+Worksheet step (7)
+
+Instead of opening Activity Monitor, click the Split Terminal button in the upper-right corner of
+the Firebase Studio terminal. In the new terminal, run the command: top
+
+Memory allocation
+
+Extra time
+
+Instead of opening Activity Monitor, click the Split Terminal button in the upper-right corner of
+the Firebase Studio terminal. In the new terminal, run the command: top
+Virtual memory
+
+Note that the Virtual memory and Paging sections do not work on Firebase Studio because of a
+platform-imposed limit on the amount of lockable memory. To use them, students would have to
+be working locally on a macOS or GNU/Linux system.
+
+Signals
+
+Instead of running man signal, use man 7 signal
+
